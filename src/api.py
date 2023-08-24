@@ -1,3 +1,4 @@
+import torch
 from flask import Flask, request
 from utils import validate_inputs, get_emulator_model, HTTP_BAD_REQUEST, format_inputs
 
@@ -28,8 +29,18 @@ def get_prevalence():
             HTTP_BAD_REQUEST
 
     # Get trained model
-    emulator = get_emulator_model(label=raw_inputs['emulatorModel'])
-
+    emulator_type = raw_inputs['emulatorModel']
+    emulator = get_emulator_model(label=emulator_type)
+    emulator.eval()
+    
     # Format inputs
     formatted_inputs = format_inputs(raw_inputs)
-    return raw_inputs
+
+    # Evaluate trained model on formatted inputs
+    model_outputs = {"emulator": True, "emulator_type": emulator_type}
+
+    for key, inputs in formatted_inputs.items():
+        with torch.no_grad():
+            model_outputs[key] = emulator(inputs).tolist()
+
+    return model_outputs
