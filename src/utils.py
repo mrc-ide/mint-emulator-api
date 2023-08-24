@@ -73,24 +73,24 @@ def format_inputs(raw_inputs):
     itn_usage = percent_to_float(raw_inputs['itnUsage'])
     spray_input = percent_to_float(raw_inputs['sprayInput'])
     irs_use = percent_to_float(raw_inputs['irsUse'])
-    numerical_inputs = torch.tensor([current_prevalence, level_of_resistance, itn_usage, spray_input, net_use, irs_use])
+    numerical_inputs = torch.tensor([current_prevalence, level_of_resistance, itn_usage, spray_input, net_use, irs_use], dtype=torch.float32)
     # Construct dummy variables for categorical inputs
     biting_people = [1, 0] if raw_inputs["bitingPeople"] == "high" else [0, 1]
     biting_indoors = [1, 0] if raw_inputs["bitingIndoors"] == "high" else [0, 1]
     seasonality = [1, 0] if raw_inputs["seasonality"] == "perennial" else [0, 1]
-    categorical_inputs = torch.tensor(biting_people + biting_indoors + seasonality)
+    categorical_inputs = torch.tensor(biting_people + biting_indoors + seasonality, dtype=torch.float32)
 
     # Vectors for no intervention, pyrethroid only ITN only, pyrethroid-PBO ITN only, and pyrethroid-pyrrole ITN only
-    pyrethroid_only_itn = torch.tensor([0, 0, 0, 0, 1, 0, 0, 0])
-    pyrethroid_pbo_itn = torch.tensor([0, 0, 0, 0, 0, 1, 0, 0])
-    no_intervention = torch.tensor([0, 0, 0, 0, 0, 0, 1, 0])
-    pyrethroid_pbo_pyrrole_itn = torch.tensor([0, 0, 0, 0, 0, 0, 0, 1])
+    pyrethroid_only_itn = torch.tensor([0, 0, 0, 0, 1, 0, 0, 0], dtype=torch.float32)
+    pyrethroid_pbo_itn = torch.tensor([0, 0, 0, 0, 0, 1, 0, 0], dtype=torch.float32)
+    no_intervention = torch.tensor([0, 0, 0, 0, 0, 0, 1, 0], dtype=torch.float32)
+    pyrethroid_pbo_pyrrole_itn = torch.tensor([0, 0, 0, 0, 0, 0, 0, 1], dtype=torch.float32)
 
     # Construct input sets in correct order using Pytorch tensors
-    formatted_inputs['no_intervention'] = torch.hstack([categorical_inputs, no_intervention, numerical_inputs])
-    formatted_inputs['pyrethroid_only_itn'] = torch.hstack([categorical_inputs, pyrethroid_only_itn, numerical_inputs])
-    formatted_inputs['pyrethroid_pbo_itn'] = torch.hstack([categorical_inputs, pyrethroid_pbo_itn, numerical_inputs])
-    formatted_inputs['pyrethroid_pbo_pyrrole_itn'] = torch.hstack([categorical_inputs, pyrethroid_pbo_pyrrole_itn, numerical_inputs])
+    formatted_inputs['no_intervention'] = torch.hstack([categorical_inputs, no_intervention, numerical_inputs]).reshape(1, 20)
+    formatted_inputs['pyrethroid_only_itn'] = torch.hstack([categorical_inputs, pyrethroid_only_itn, numerical_inputs]).reshape(1, 20)
+    formatted_inputs['pyrethroid_pbo_itn'] = torch.hstack([categorical_inputs, pyrethroid_pbo_itn, numerical_inputs]).reshape(1, 20)
+    formatted_inputs['pyrethroid_pbo_pyrrole_itn'] = torch.hstack([categorical_inputs, pyrethroid_pbo_pyrrole_itn, numerical_inputs]).reshape(1, 20)
     return formatted_inputs
 
 
