@@ -28,7 +28,8 @@ def validate_inputs(inputs):
         "levelOfResistance",
         "sprayInput",
         "netUse",
-        "irsUse"
+        "irsUse",
+        "emulatorModel"
     ]
 
     # Set difference - TODO also validate that inputs are correct data type

@@ -24,6 +24,7 @@ def get_prevalence():
     raw_inputs = request.form
     if not validate_inputs(raw_inputs):
         return "Inputs not valid. Ensure { bitingPeople, bitingIndoors, seasonality, currentPrevalence, " \
-               "levelOfResistance, sprayInput, netUse, irsUse } present in request form.", HTTP_BAD_REQUEST
+               "levelOfResistance, sprayInput, netUse, irsUse, emulatorModel } present in request form.", \
+            HTTP_BAD_REQUEST
 
     return raw_inputs
