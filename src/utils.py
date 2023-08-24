@@ -36,3 +36,6 @@ def validate_inputs(inputs):
         return False
 
     return True
+
+
+HTTP_BAD_REQUEST = 400

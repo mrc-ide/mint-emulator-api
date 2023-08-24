@@ -1,5 +1,5 @@
 from flask import Flask, request
-from utils import validate_inputs, get_emulator_model
+from utils import validate_inputs, get_emulator_model, HTTP_BAD_REQUEST
 
 app = Flask(__name__)
 
@@ -24,6 +24,6 @@ def get_prevalence():
     raw_inputs = request.form
     if not validate_inputs(raw_inputs):
         return "Inputs not valid. Ensure { bitingPeople, bitingIndoors, seasonality, currentPrevalence, " \
-               "levelOfResistance, sprayInput, netUse, irsUse } present in request form."
+               "levelOfResistance, sprayInput, netUse, irsUse } present in request form.", HTTP_BAD_REQUEST
 
     return raw_inputs
