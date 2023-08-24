@@ -18,3 +18,21 @@ def get_emulator_model(label="LSTM"):
         return model
     return "Model not found - ensure label is one of { LSTM, GRU, FFNN, BiRNN }"
 
+
+def validate_inputs(inputs):
+    params = [
+        "bitingPeople",
+        "bitingIndoors",
+        "seasonality",
+        "currentPrevalence",
+        "levelOfResistance",
+        "sprayInput",
+        "netUse",
+        "irsUse"
+    ]
+
+    # Set difference - TODO also validate that inputs are correct data type
+    if len(set(params).difference(inputs.keys())) != 0:
+        return False
+
+    return True
