@@ -1,6 +1,5 @@
 import torch
 from models import FFNN, BiRNN, LSTM, GRU
-import pandas as pd
 
 def get_emulator_model(label="LSTM"):
     model_info = {
