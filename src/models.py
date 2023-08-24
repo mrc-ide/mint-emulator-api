@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class FFNN(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, dropout_prob):
+    def __init__(self, input_size=20, hidden_size=64, output_size=61, dropout_prob=0.5):
         super(FFNN, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size)
         self.bn1 = nn.BatchNorm1d(hidden_size)
@@ -23,7 +23,7 @@ class FFNN(nn.Module):
 
 
 class GRU(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, dropout_prob):
+    def __init__(self, input_size=20, hidden_size=64, output_size=61, dropout_prob=0.5):
         super(GRU, self).__init__()
         self.hidden_size = hidden_size
         self.gru = nn.GRU(input_size, hidden_size, dropout=dropout_prob)  # Dropout between RNN layers
@@ -42,7 +42,7 @@ class GRU(nn.Module):
 
 
 class LSTM(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, dropout_prob):
+    def __init__(self, input_size=20, hidden_size=64, output_size=61, dropout_prob=0.5):
         super(LSTM, self).__init__()
         self.hidden_size = hidden_size
         self.lstm = nn.LSTM(input_size, hidden_size, dropout=dropout_prob)  # Dropout between LSTM layers
@@ -61,7 +61,7 @@ class LSTM(nn.Module):
 
 
 class BiRNN(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, dropout_prob):
+    def __init__(self, input_size=20, hidden_size=64, output_size=61, dropout_prob=0.5):
         super(BiRNN, self).__init__()
         self.hidden_size = hidden_size
         self.rnn = nn.RNN(input_size, hidden_size, bidirectional=True,

@@ -1,5 +1,5 @@
 from flask import Flask, request
-from utils import validate_inputs, get_emulator_model, HTTP_BAD_REQUEST
+from utils import validate_inputs, get_emulator_model, HTTP_BAD_REQUEST, format_inputs
 
 app = Flask(__name__)
 
@@ -27,4 +27,9 @@ def get_prevalence():
                "levelOfResistance, sprayInput, netUse, irsUse, emulatorModel } present in request form.", \
             HTTP_BAD_REQUEST
 
+    # Get trained model
+    emulator = get_emulator_model(label=raw_inputs['emulatorModel'])
+
+    # Format inputs
+    formatted_inputs = format_inputs(raw_inputs)
     return raw_inputs
