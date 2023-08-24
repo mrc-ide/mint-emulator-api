@@ -32,7 +32,7 @@ def get_prevalence():
     emulator_type = raw_inputs['emulatorModel']
     emulator = get_emulator_model(label=emulator_type)
     emulator.eval()
-    
+
     # Format inputs
     formatted_inputs = format_inputs(raw_inputs)
 
